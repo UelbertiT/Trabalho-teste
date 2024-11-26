@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>Pesquisa de Filme</h1>
+  <div class="search-box">
+    <input type="text" (keydown.enter)="pesquisa()" [(ngModel)]="titulo" placeholder="Digite o nome do filme" />
+    <button (click)="pesquisa()">Buscar</button>
+  </div>
+
+  <div *ngIf="filme && filme.Response !== 'False' && !showFavoritos">
+    <div>
+      <h2>{{ filme.Title }}</h2>
+      <div class="buttonContainer">
+        <button (click)="favoritar()">Favoritar</button>
+        <button (click)="getFavoritos()">Ver Favoritos</button>
+      </div>
+    </div>
+
+    <p><strong>Ano:</strong> {{ filme.Year }}</p>
+    <p><strong>Gênero:</strong> {{ filme.Genre }}</p>
+    <p><strong>Diretor:</strong> {{ filme.Director }}</p>
+    <p><strong>Enredo:</strong> {{ filme.Plot }}</p>
+    <p><strong>Atores:</strong> {{ filme.Actors }}</p>
+    <img [src]="filme.Poster" alt="Pôster do filme" />
+  </div>
+
+  <div *ngIf="filme?.Response === 'False' && !showFavoritos">
+    <p>Filme não encontrado. Tente outro título.</p>
+  </div>
+
+  <div *ngIf="showFavoritos">
+    <div *ngFor="let filme of favoritosList" (click)="selectFavorito(filme)">
+      {{ filme }}
+    </div>
+  </div>
+</div>
